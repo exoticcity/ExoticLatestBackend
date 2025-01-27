@@ -1,0 +1,28 @@
+version: '3.12.3'
+
+services:
+  db:
+    image: postgres:16.3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_HOST: exoticserver.postgres.database.azure.com
+      POSTGRES_DB: postgres
+      POSTGRES_USER: msisgnqytn
+      POSTGRES_PASSWORD: $7oaI$heGSjF7lRE
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DEBUG: 'true'
+      DATABASE_URL: postgres://msisgnqytn:$7oaI$heGSjF7lRE@db:5432/postgres
+
+volumes:
+  postgres_data:
