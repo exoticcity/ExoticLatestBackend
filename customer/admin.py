@@ -1,0 +1,18 @@
+from django.contrib import admin
+from .models import *
+
+# Register your models here.
+
+class BCCustomerAdmin(admin.ModelAdmin):
+    search_fields = ['No']
+    list_display = ['No', 'Name', 'SearchName', 'Name2', 'Address', 'Address2', 'City', 'Contact', 'PhoneNo', 'TelexNo', 'Blocked', 'DocumentSendingProfile', 'ShiptoCode', 'OurAccountNo', 'TerritoryCode', 'GlobalDimension1Code', 'GlobalDimension2Code', 'ChainName', 'BudgetedAmount', 'CreditLimitLCY', 'CustomerPostingGroup', 'CurrencyCode', 'CustomerPriceGroup', 'LanguageCode', 'RegistrationNumber', 'StatisticsGroup', 'PaymentTermsCode', 'SalespersonCode', 'ShipmentMethodCode', 'PlaceofExport', 'CustomerDiscGroup', 'CountryRegionCode', 'Amount', 'DebitAmount', 'CreditAmount', 'InvoiceAmounts', 'OtherAmountsLCY', 'Comment', 'LastStatementNo', 'Prepayment', 'PartnerType', 'Payments', 'PostCode', 'PrintStatements', 'PricesIncludingVAT', 'ProfitLCY', 'BilltoCustomerNo', 'Priority', 'PaymentMethodCode', 'LastModifiedDateTime', 'GlobalDimension1Filter', 'GlobalDimension2Filter', 'Balance', 'BalanceLCY', 'BalanceDue', 'NetChange', 'NetChangeLCY', 'SalesLCY', 'InvAmountsLCY', 'InvDiscountsLCY', 'NoofInvoices', 'InvoiceDiscCode', 'InvoiceCopies', 'PmtDiscountsLCY', 'PmtToleranceLCY', 'BalanceDueLCY', 'PaymentsLCY', 'CrMemoAmounts', 'CrMemoAmountsLCY', 'FinanceChargeMemoAmounts', 'ShippedNotInvoiced', 'ShippedNotInvoicedLCY', 'ShippingAgentCode', 'ApplicationMethod', 'LocationCode', 'FaxNo', 'VATBusPostingGroup', 'VATRegistrationNo', 'CombineShipments', 'GenBusPostingGroup', 'GLN', 'County', 'EMail', 'EORINumber', 'UseGLNinElectronicDocument', 'ReminderTermsCode', 'ReminderAmounts', 'ReminderAmountsLCY', 'TaxAreaCode', 'TaxAreaID', 'TaxLiable', 'CurrencyFilter']
+    list_filter = ['No', 'Name', 'SearchName', 'Name2', 'Address', 'Address2', 'City', 'Contact', 'PhoneNo', 'TelexNo', 'Blocked', 'DocumentSendingProfile', 'ShiptoCode', 'OurAccountNo', 'TerritoryCode', 'GlobalDimension1Code', 'GlobalDimension2Code', 'ChainName', 'BudgetedAmount', 'CreditLimitLCY', 'CustomerPostingGroup', 'CurrencyCode', 'CustomerPriceGroup', 'LanguageCode', 'RegistrationNumber', 'StatisticsGroup', 'PaymentTermsCode', 'SalespersonCode', 'ShipmentMethodCode', 'PlaceofExport', 'CustomerDiscGroup', 'CountryRegionCode', 'Amount', 'DebitAmount', 'CreditAmount', 'InvoiceAmounts', 'OtherAmountsLCY', 'Comment', 'LastStatementNo', 'Prepayment', 'PartnerType', 'Payments', 'PostCode', 'PrintStatements', 'PricesIncludingVAT', 'ProfitLCY', 'BilltoCustomerNo', 'Priority', 'PaymentMethodCode', 'LastModifiedDateTime', 'GlobalDimension1Filter', 'GlobalDimension2Filter', 'Balance', 'BalanceLCY', 'BalanceDue', 'NetChange', 'NetChangeLCY', 'SalesLCY', 'InvAmountsLCY', 'InvDiscountsLCY', 'NoofInvoices', 'InvoiceDiscCode', 'InvoiceCopies', 'PmtDiscountsLCY', 'PmtToleranceLCY', 'BalanceDueLCY', 'PaymentsLCY', 'CrMemoAmounts', 'CrMemoAmountsLCY', 'FinanceChargeMemoAmounts', 'ShippedNotInvoiced', 'ShippedNotInvoicedLCY', 'ShippingAgentCode', 'ApplicationMethod', 'LocationCode', 'FaxNo', 'VATBusPostingGroup', 'VATRegistrationNo', 'CombineShipments', 'GenBusPostingGroup', 'GLN', 'County', 'EMail', 'EORINumber', 'UseGLNinElectronicDocument', 'ReminderTermsCode', 'ReminderAmounts', 'ReminderAmountsLCY', 'TaxAreaCode', 'TaxAreaID', 'TaxLiable', 'CurrencyFilter']
+    list_per_page = 20  # Apply pagination
+
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['email', 'is_active', 'name', 'customer_id']
+    fields = ['email', 'is_active', 'name', 'customer_id']
+    readonly_fields = ['name', 'customer_id']
+
+admin.site.register(BCCustomer, BCCustomerAdmin)
+admin.site.register(Customer)
