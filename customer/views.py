@@ -135,7 +135,8 @@ def reset_password(request, user_id, token):
               if isSaved:   
                 return JsonResponse({'message': "Password reset successfully.", "new_password": new_password})
                else:
-                return JsonResponse({'message': "Password reset failed."})       return JsonResponse({'message': "Invalid password reset link."})
+                return JsonResponse({'message': "Password reset failed."})       
+        return JsonResponse({'message': "Invalid password reset link."})
 
 
 def getCustomersFromBC(request, *args, **kwargs):
