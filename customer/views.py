@@ -125,20 +125,30 @@ def forget_password(request):
             return JsonResponse({'message': "Password reset link sent to your email."})                                                            
 
 def reset_password(request, user_id, token):
-       user = User.objects.get(pk=user_id)
-       if default_token_generator.check_token(user, token):
-           if request.method == 'POST':
-               data = json.loads(request.body)
-               new_password = data.get('new_password')
-               user.set_password(new_password)
-               isSaved=user.save()
-               if isSaved:   
-                return JsonResponse({'message': "Password reset successfully.", "new_password": new_password})
-               else:
-                return JsonResponse({'message': "Password reset failed."})
-                   
-       return JsonResponse({'message': "Invalid password reset link."})
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return JsonResponse({'message': "User not found."}, status=404)
 
+    if default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            new_password = data.get('new_password')
+            
+            # Set the new password and save the user
+            user.set_password(new_password)
+            
+            try:
+                user.save()  # Save the user object
+                return JsonResponse({'message': "Password reset successfully."})
+            except ValidationError:
+                return JsonResponse({'message': "Password reset failed due to a validation error."}, status=400)
+            except Exception as e:
+                return JsonResponse({'message': f"Password reset failed: {str(e)}"}, status=500)
+        else:
+            return JsonResponse({'message': "Invalid method."}, status=405)
+    
+    return JsonResponse({'message': "Invalid password reset link."}, status=400)
 
 def getCustomersFromBC(request, *args, **kwargs):
     url = "https://api.businesscentral.dynamics.com/v2.0/Live/api/bctech/demo/v2.0/Companies(f03f6225-081c-ec11-bb77-000d3abcd65f)/customer"
