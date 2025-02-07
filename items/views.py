@@ -286,27 +286,71 @@ class GetCategory(viewsets.ViewSet):
         brands = Product.objects.values_list('Brand', flat=True).distinct()
         return JsonResponse({'brands': list(brands)})
         
+# def getPrice(self, ItemNo, group, qnty):
+#     Price = 0
+#     try:
+#         items = SalesPrice.objects.filter(ItemNo=ItemNo)
+#         for item in items:
+#             if 'Campaign' in item.salestype and item.EndDate >= datetime.date.today():
+#                 filteredPrice = SalesPrice.objects.filter(ItemNo=ItemNo, salestype='Campaign').first()
+#                 if filteredPrice:
+#                     Price = filteredPrice.UnitPrice
+#                 else:
+#                     return JsonResponse({'error': 'Campaign price not found!'})
+#             else:
+#                 filteredPrice = SalesPrice.objects.filter(ItemNo=ItemNo, Salecode=group, MinimumQuantity__lte=qnty).order_by('MinimumQuantity').last()
+#                 if filteredPrice:
+#                     Price = filteredPrice.UnitPrice
+#                 else:
+#                     return JsonResponse({'error': 'Regular price not found!'})
+#     except Exception as e:
+#         return JsonResponse({'error': 'Product Not Found! - ' + str(e)})
+    
+#     return JsonResponse({'price': filteredPrice.UnitPrice})
+
+
 def getPrice(self, ItemNo, group, qnty):
     Price = 0
+    print(f"{ItemNo}, {group}, {qnty}")
+    
     try:
+        # Fetch all items with the given ItemNo
         items = SalesPrice.objects.filter(ItemNo=ItemNo)
+        print(f"Found items: {items}")
+        
+        # Check if any item exists, else return error
+        if not items:
+            return JsonResponse({'error': 'Product Not Found!'})
+
         for item in items:
+            print(item.salestype)
+            # Check if the item is part of a campaign and if the campaign is still valid
             if 'Campaign' in item.salestype and item.EndDate >= datetime.date.today():
+                # If found a campaign, handle it separately
                 filteredPrice = SalesPrice.objects.filter(ItemNo=ItemNo, salestype='Campaign').first()
+                print(f"Filtered campaign price: {filteredPrice}")
+                
                 if filteredPrice:
                     Price = filteredPrice.UnitPrice
+                    return JsonResponse({'price': Price})
                 else:
                     return JsonResponse({'error': 'Campaign price not found!'})
-            else:
-                filteredPrice = SalesPrice.objects.filter(ItemNo=ItemNo, Salecode=group, MinimumQuantity__lte=qnty).order_by('MinimumQuantity').last()
-                if filteredPrice:
-                    Price = filteredPrice.UnitPrice
-                else:
-                    return JsonResponse({'error': 'Regular price not found!'})
+        
+        # If no campaign was found, proceed to the regular price logic
+        # Filter based on Salecode (group) and MinimumQuantity
+        filteredPrice = SalesPrice.objects.filter(ItemNo=ItemNo, Salecode=group, MinimumQuantity__lte=qnty).order_by('MinimumQuantity').last()
+        
+        if filteredPrice:
+            Price = filteredPrice.UnitPrice
+            return JsonResponse({'price': Price})
+        else:
+            return JsonResponse({'error': 'Regular price not found!'})
+
     except Exception as e:
         return JsonResponse({'error': 'Product Not Found! - ' + str(e)})
     
-    return JsonResponse({'price': filteredPrice.UnitPrice})
+    # Return the price (although this should have already been returned from within the loop or after regular price logic)
+    return JsonResponse({'price': Price})
 
 def updateItem(self, itemNo):
     try:
