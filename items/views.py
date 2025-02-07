@@ -342,15 +342,17 @@ def getPrice(self, ItemNo, group, qnty):
         
         if filteredPrice:
             Price = filteredPrice.UnitPrice
-            return JsonResponse({'price': Price})
+            # return JsonResponse({'price': Price})
         else:
-            return JsonResponse({'error': 'Regular price not found!'})
+            return JsonResponse({'error': 'Price with specified group not found!'})
 
     except Exception as e:
         return JsonResponse({'error': 'Product Not Found! - ' + str(e)})
     
     # Return the price (although this should have already been returned from within the loop or after regular price logic)
     return JsonResponse({'price': Price})
+
+
 
 def updateItem(self, itemNo):
     try:
