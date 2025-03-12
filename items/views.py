@@ -823,3 +823,55 @@ def upload_zip(request):
         return Response({'error': 'Invalid ZIP file'}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+def updateALLItemsaleprices(request):
+    lastUpdatedTime = '2025-01-01T00:00:00.000Z'
+    print("Last Updated Time:", lastUpdatedTime)
+
+    # ✅ Fixed Typo: Changed `ModifedDateTime` to `ModifiedDateTime`
+    price_url = f"https://api.businesscentral.dynamics.com/v2.0/7c885fa6-8571-4c76-9e28-8e51744cf57a/Live/ODataV4/Company('My%20Company')/itemsaleprice?$filter=ModifedDateTime gt {lastUpdatedTime}&$top=500"
+    
+    try:
+        headers = getToken()  # Ensure this returns a valid dict with Authorization header
+        print(f"headers {headers}")
+        response = requests.get(price_url, headers=headers)
+        
+        if response.status_code == 200:
+            price_data = response.json()
+
+            if 'value' in price_data:
+                for price in price_data.get('value', []):  # ✅ Use `.get()` to prevent KeyError
+                    SalesPrice.objects.update_or_create(
+                        Srno=f"{price.get('salestype', '')}-{price.get('Salecode', '')}-{price.get('ItemNo', '')}-{price.get('MinimumQuantity', '')}",
+                        defaults={
+                            'salestype': price.get('salestype', ''),
+                            'Salecode': price.get('Salecode', ''),
+                            'ItemNo': price.get('ItemNo', ''),
+                            'UnitPrice': price.get('UnitPrice', 0.0),
+                            'MinimumQuantity': price.get('MinimumQuantity', 0),
+                            'StartDate': price.get('StartDate', None),
+                            'EndDate': price.get('EndDate', None),
+                            'SystemModifiedAt': price.get('ModifiedDateTime', None)  # ✅ Fixed field name
+                        }
+                    )
+                print('Prices updated!')
+            else:
+                print("Warning: 'value' key is missing in API response.")
+
+        else:
+            print(f"Error: API returned status code {response.status_code}, Response: {response.text}")
+            return JsonResponse({'error': 'Failed to fetch prices'}, status=500)
+
+    except requests.exceptions.RequestException as e:
+        print("Request failed:", str(e))
+        return JsonResponse({'error': 'API request failed'}, status=500)
+
+    return JsonResponse({'message': 'Products and Prices Updated!'})
+
+@api_view(['GET'])
+def testView(request):
+   return  Response ({"msg":"Server is Running "})
