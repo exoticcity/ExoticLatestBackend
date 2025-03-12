@@ -20,4 +20,6 @@ urlpatterns = [
     path('update_cart/<str:pk>/', updateCart, name='updateCart'),
     path('create_cart/', createCart, name='createCart'),
     path('upload/', upload_zip, name='upload_zip'),
+    path('update_all_products_job/', updateALLItemsaleprices, name='update-all-products-job'),
+    path('test_server/' , testView,name='testServerView')
 ]
