@@ -191,7 +191,9 @@ class GetProducts(viewsets.ModelViewSet):
         'ItemCategoryCode',
         'ItemSubCategoryCode',
         'Brand',
-        'BarCode'
+        'BarCode',
+        'SalesBlocked',
+        'Blocked'
     ]
     pagination_class = LimitOffsetPagination
     search_fields = [
@@ -202,7 +204,9 @@ class GetProducts(viewsets.ModelViewSet):
         'ItemCategoryCode',
         'ItemSubCategoryCode',
         'Brand',
-        'BarCode'
+        'BarCode',
+        'SalesBlocked',
+        'Blocked'
     ]
 
     def get_queryset(self):
