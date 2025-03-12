@@ -828,7 +828,7 @@ def upload_zip(request):
 
 
 def updateALLItemsaleprices(request):
-    lastUpdatedTime = '2024-06-01T00:00:00.000Z'
+    lastUpdatedTime = '2024-10-01T00:00:00.000Z'
     print("Last Updated Time:", lastUpdatedTime)
 
     base_url = "https://api.businesscentral.dynamics.com/v2.0/7c885fa6-8571-4c76-9e28-8e51744cf57a/Live/ODataV4/Company('My%20Company')/itemsaleprice"
