@@ -832,11 +832,20 @@ def upload_zip(request):
 
 
 def updateALLItemsaleprices(request):
-    lastUpdatedTime = '2024-10-01T00:00:00.000Z'
-    print("Last Updated Time:", lastUpdatedTime)
+    # lastUpdatedTime = '2024-10-01T00:00:00.000Z'
+    # print("Last Updated Time:", lastUpdatedTime)
 
+    # base_url = "https://api.businesscentral.dynamics.com/v2.0/7c885fa6-8571-4c76-9e28-8e51744cf57a/Live/ODataV4/Company('My%20Company')/itemsaleprice"
+    # filter_query = f"?$filter=ModifedDateTime gt {lastUpdatedTime}"
+    # price_url = base_url + filter_query
+    updateFrom = '2024-01-01T00:00:00.000Z'
+    updateUpto='2024-02-28T23:59:59.999Z'
+    print("Last Updated Time:", updateFrom)
+#  gt 2024-01-01T00:00:00.000Z and 
+#  ModifedDateTime lt 2024-02-28T23:59:59.999Z  
+ 
     base_url = "https://api.businesscentral.dynamics.com/v2.0/7c885fa6-8571-4c76-9e28-8e51744cf57a/Live/ODataV4/Company('My%20Company')/itemsaleprice"
-    filter_query = f"?$filter=ModifedDateTime gt {lastUpdatedTime}"
+    filter_query = f"?$filter=ModifedDateTime gt {updateFrom} and ModifedDateTime lt {updateUpto}"
     price_url = base_url + filter_query
     
     headers = getToken()
