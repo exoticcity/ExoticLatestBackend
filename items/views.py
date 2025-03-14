@@ -846,7 +846,7 @@ def updateALLItemsaleprices(request):
 
     # price_url = base_url + filter_query
     updateFrom ='2025-01-01T00:00:00.000Z'
-    updateUpto='2025-01-31T23:59:59.999Z'
+    updateUpto='2025-01-15T23:59:59.999Z'
 
  
     base_url = "https://api.businesscentral.dynamics.com/v2.0/7c885fa6-8571-4c76-9e28-8e51744cf57a/Live/ODataV4/Company('My%20Company')/itemsaleprice"
