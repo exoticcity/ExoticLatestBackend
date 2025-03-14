@@ -170,7 +170,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'msisgnqytn',
-        'PASSWORD': 'Tmrconsult@1234',
+        'PASSWORD': '$Exotic!@%%123',
         'HOST': 'exoticserver2.postgres.database.azure.com',
         'PORT': '5432'
     }
