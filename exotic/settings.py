@@ -154,13 +154,24 @@ WSGI_APPLICATION = 'exotic.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'msisgnqytn',
+#         'PASSWORD': '$7oaI$heGSjF7lRE',
+#         'HOST': 'exoticserver.postgres.database.azure.com',
+#         'PORT': '5432'
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'msisgnqytn',
-        'PASSWORD': '$7oaI$heGSjF7lRE',
-        'HOST': 'exoticserver.postgres.database.azure.com',
+        'PASSWORD': 'Tmrconsult@1234',
+        'HOST': 'exoticserver2.postgres.database.azure.com',
         'PORT': '5432'
     }
 }
